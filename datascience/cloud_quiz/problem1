@@ -1,0 +1,31 @@
+HadoopVersion	PigVersion	UserId	StartedAt	FinishedAt	Features
+1.0.3	0.11.1-amzn	hadoop	2013-05-31 11:42:42	2013-05-31 11:50:58	GROUP_BY,ORDER_BY
+
+Success!
+
+Job Stats (time in seconds):
+JobId	Maps	Reduces	MaxMapTime	MinMapTIme	AvgMapTime	MedianMapTime	MaxReduceTime	MinReduceTime	AvgReduceTime	MedianReducetime	Alias	Feature	Outputs
+job_201305311135_0001	33	50	78	41	61	63	88	12	28	15	count_by_object,ntriples,objects,raw	GROUP_BY,COMBINER	
+job_201305311135_0002	1	1	15	15	15	15	15	15	15	15	count_by_object_ordered	SAMPLER	
+job_201305311135_0003	1	50	42	42	42	42	21	12	15	15	count_by_object_ordered	ORDER_BY	/user/hadoop/example-results,
+
+Input(s):
+Successfully read 10000000 records (98796398 bytes) from: "s3n://uw-cse-344-oregon.aws.amazon.com/btc-2010-chunk-000"
+
+Output(s):
+Successfully stored 1622294 records (89971068 bytes) in: "/user/hadoop/example-results"
+
+Counters:
+Total records written : 1622294
+Total bytes written : 89971068
+Spillable Memory Manager spill count : 0
+Total bags proactively spilled: 0
+Total records proactively spilled: 0
+
+Job DAG:
+job_201305311135_0001	->	job_201305311135_0002,
+job_201305311135_0002	->	job_201305311135_0003,
+job_201305311135_0003
+
+
+2013-05-31 11:50:58,744 [main] INFO  org.apache.pig.backend.hadoop.executionengine.mapReduceLayer.MapReduceLauncher - Success!
