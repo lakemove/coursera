@@ -61,7 +61,7 @@ L1 = [1,1] # <-- want len(L1) != len(list(set(L1)))
 L2 = [2,1] # <-- same len(L2) == len(list(set(L2))) but L2 != list(set(L2))
 
 ## Task 18
-odd_num_list_range = { x for x in range(2, 99, 2)}
+odd_num_list_range = { x for x in range(1, 100, 2)}
 
 ## Task 19
 L = ['A','B','C','D','E']
@@ -109,5 +109,5 @@ def cubes(L): return [ x**3 for x in L ]
 def dict2list(dct, keylist): return [ dct[x] for x in keylist ]
 
 ## Task 30 
-def list2dict(L, keylist): return { x:dct[x] for x in keylist } 
+def list2dict(L, keylist): return { x:L[x] for x in keylist } 
 
