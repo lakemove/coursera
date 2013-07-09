@@ -10,13 +10,13 @@ divisible_by_3 = (673 + 909) % 3 == 0
 ## Task 4
 x = -9
 y = 1/2
-statement_val = 2**(y+1/2) if x+10<0 else 2**(y-1/2).
+statement_val = 2**(y+1/2) if x+10<0 else 2**(y-1/2)
 
 ## Task 5
 first_five_squares = { x**2 for x in {1,2,3,4,5} }
 
 ## Task 6
-first_five_pows_two = { 2**x. for x in {0,1,2,3,4} }
+first_five_pows_two = { 2**x for x in {0,1,2,3,4} }
 
 ## Task 7: enter in the two new sets
 X1 = { 1, 3, 5 }
@@ -41,7 +41,7 @@ L_average = sum([20, 10, 15, 75])/len([20, 10, 15, 75]) # average of: [20, 10, 1
 
 ## Task 12
 LofL = [[.25, .75, .1], [-1, 0], [4, 4, 4, 4]]
-LofL_sum = sum([sum(x) for x in LofL])... # use form: sum([sum(...) ... ])
+LofL_sum = sum([sum(x) for x in LofL]) # use form: sum([sum(...) ... ])
 
 ## Task 13
 cartesian_product = [[x, y] for x in {'A','B','C'} for y in {1,2,3}]# use form: [ ... {'A','B','C'} ... {1,2,3} ... ]
