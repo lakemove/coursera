@@ -109,5 +109,5 @@ def cubes(L): return [ x**3 for x in L ]
 def dict2list(dct, keylist): return [ dct[x] for x in keylist ]
 
 ## Task 30 
-def list2dict(L, keylist): return { x:L[x] for x in keylist } 
+def list2dict(L, keylist): return { keylist[x]:L[x] for x in range(len(keylist))} 
 
