@@ -39,8 +39,7 @@ def orSearch(inverseIndex, query):
     Output: the set of document ids that contain _any_ of the specified words
     """
     docs = set()
-    tokens=query.split()
-    for t in tokens :
+    for t in query :
         if t in inverseIndex :
             docs = docs | inverseIndex[t]
         else :
@@ -53,9 +52,8 @@ def andSearch(inverseIndex, query):
     Input: an inverse index, as created by makeInverseIndex, and a list of words to query
     Output: the set of all document ids that contain _all_ of the specified words
     """
-    tokens=query.split()
-    docs=inverseIndex[tokens[0]]
-    for t in tokens :
+    docs=inverseIndex[query[0]]
+    for t in query :
         if t in inverseIndex :
             docs = docs & inverseIndex[t]
         else : 
