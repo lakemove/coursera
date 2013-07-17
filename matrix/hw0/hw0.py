@@ -21,10 +21,10 @@ def myFunctionComposition(f, g): return {x:g[x] for x in f}
 ## Problem 4
 # Please only enter your numerical solution.
 
-complex_addition_a = 5 + 3i
-complex_addition_b = i
-complex_addition_c = -1 + .001i
-complex_addition_d = .001 + 9i
+complex_addition_a = 5 + 3j
+complex_addition_b = j
+complex_addition_c = -1 + .001j
+complex_addition_d = .001 + 9j
 
 
 
