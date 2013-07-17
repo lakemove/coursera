@@ -8,7 +8,7 @@ def movie_review(name):
     Output: a string (one of the review options), selected at random using randint
     """
     review_options = ["See it!", "A gem!", "Ideological claptrap!"]
-    return review_options[randint(0, len(review_options))]
+    return review_options[randint(0, len(review_options)-1)]
 
 ## Tasks 2 and 3 are in dictutil.py
 
