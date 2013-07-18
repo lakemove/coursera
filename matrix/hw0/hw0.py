@@ -15,7 +15,7 @@ def myLists(L): return [list(range(1,x+1)) for x in L]
 
 
 ## Problem 3
-def myFunctionComposition(f, g): return {x:g[x] for x in f}
+def myFunctionComposition(f, g): return {x:g[f[x]] for x in f}
 
 
 ## Problem 4
