@@ -143,11 +143,12 @@ def find_average_record(sen_set, voting_dict):
         >>> find_average_record({'Fox-Epstein','Ravella'}, voting_dict)
         [-0.5, -0.5, 0.0]
     """
-    initial = [0] * 46
-    for sen in sen_set :
-        vot = voting_dict[sen]
-        initial = [vot[i] + initial[i] for i in range(46)]
-    return [x/len(sen_set) for x in initial]
+    sen_list = list(sen_set)
+    initial = voting_dict[sen_list[0]]
+    for x in range(1, len(sen_list)) :
+        vot = voting_dict[sen_list[x]]
+        initial = [vot[i] + initial[i] for i in range(len(initial))]
+    return [y/len(sen_set) for y in initial]
 
 average_Democrat_record = [-0.16279069767441862, -0.23255813953488372, 1.0, 0.8372093023255814, 0.9767441860465116, -0.13953488372093023, -0.9534883720930233, 0.813953488372093, 0.9767441860465116, 0.9767441860465116, 0.9069767441860465, 0.7674418604651163, 0.6744186046511628, 0.9767441860465116, -0.5116279069767442, 0.9302325581395349, 0.9534883720930233, 0.9767441860465116, -0.3953488372093023, 0.9767441860465116, 1.0, 1.0, 1.0, 0.9534883720930233, -0.4883720930232558, 1.0, -0.32558139534883723, -0.06976744186046512, 0.9767441860465116, 0.8604651162790697, 0.9767441860465116, 0.9767441860465116, 1.0, 1.0, 0.9767441860465116, -0.3488372093023256, 0.9767441860465116, -0.4883720930232558, 0.23255813953488372, 0.8837209302325582, 0.4418604651162791, 0.9069767441860465, -0.9069767441860465, 1.0, 0.9069767441860465, -0.3023255813953488] # (give the vector)
 
@@ -170,8 +171,8 @@ def bitter_rivals(voting_dict):
     answer = set()
     for x in pairs :
         score = policy_compare(x, pairs[x], voting_dict)
-        if score < smallest :
-            score = smallest
+        if score <= smallest :
+            smallest = score
             answer = (x, pairs[x])
     return answer
 
