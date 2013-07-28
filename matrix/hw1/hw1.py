@@ -45,7 +45,7 @@ u_0100010 = {'b', 'c', 'd', 'e'}
 # Use the same format as the previous problem
 
 v_0010010 = {'c', 'd'}
-v_0100010 = {}
+v_0100010 = set()
 
 
 
