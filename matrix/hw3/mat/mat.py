@@ -3,45 +3,54 @@ from vec import Vec
 def getitem(M, k):
     "Returns the value of entry k in M.  The value of k should be a pair."
     assert k[0] in M.D[0] and k[1] in M.D[1]
-    pass
+    if not k in M.f :
+        return 0
+    return M.f[k]
 
 def setitem(M, k, val):
     "Sets the element of v with label k to be val.  The value of k should be a pair"
     assert k[0] in M.D[0] and k[1] in M.D[1]
-    pass
+    M.f[k] = val
 
 def add(A, B):
     "Returns the sum of A and B"
     assert A.D == B.D
-    pass
+    return Mat(A.D, {(x,y):getitem(A, (x,y)) + getitem(B, (x,y)) for x in A.D[0] for y in A.D[1]})
 
 def scalar_mul(M, alpha):
     "Returns the product of scalar alpha with M" 
-    pass
+    return Mat(M.D, {x:alpha*getitem(M, x) for x in M.f})
 
 def equal(A, B):
     "Returns true iff A is equal to B"
     assert A.D == B.D
-    pass
+    for x in A.f :
+        # print(x)
+        if not getitem(A, x) == getitem(B, x) :
+            return False
+    for y in B.f :
+        if not getitem(B, y) == getitem(A, y) :
+            return False
+    return True
 
 def transpose(M):
     "Returns the transpose of M"
-    pass
+    return Mat((M.D[1], M.D[0]), {(x[1], x[0]):getitem(M, x) for x in M.f})
 
 def vector_matrix_mul(v, M):
     "Returns the product of vector v and matrix M"
     assert M.D[0] == v.D
-    pass
+    return Vec(M.D[1], {x:sum([getitem(M, (i,x)) * v[i] for i in M.D[0]]) for x in M.D[1]})
 
 def matrix_vector_mul(M, v):
     "Returns the product of matrix M and vector v"
     assert M.D[1] == v.D
-    pass
+    return Vec(M.D[0], {x:sum([getitem(M,(x,i)) * v[i] for i in M.D[1]]) for x in M.D[0]})
 
 def matrix_matrix_mul(A, B):
     "Returns the product of A and B"
     assert A.D[1] == B.D[0]
-    pass
+    return Mat((A.D[0], B.D[1]), {(x,y) : sum([getitem(A,(x,m))*getitem(B, (m,y)) for m in A.D[1]]) for x in A.D[0] for y in B.D[1]})
 
 ################################################################################
 
