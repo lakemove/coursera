@@ -3,6 +3,7 @@
 
 from mat import Mat
 from vec import Vec
+from matutil import mat2rowdict
 
 
 
@@ -147,15 +148,16 @@ column_row_vector_multiplication5 = Vec({0, 1, 2}, {0:-3, 1:1, 2:9})
 ## Problem 11
 def lin_comb_mat_vec_mult(M, v):
     assert(M.D[1] == v.D)
-    # return Vec(M.D[0], {x:sum([M[x,i] * v[i] for i in M.D[1]]) for x in M.D[0]})
-    return M * v
+    m=mat2rowdict(M)
+    return Vec(M.D[0], {x:sum([m[x][i] * v[i] for i in v.D]) for x in m})
+    # return M * v
 
 
 
 ## Problem 12
 def lin_comb_vec_mat_mult(v, M):
     assert(v.D == M.D[0])
-    return v * M
+    return Vec(M.D[1], {x:sum([M[x,i] * v[i] for i in v.D]) for x in M.D[1]})
 
 
 
@@ -200,9 +202,9 @@ solving_systems_x2 = 0.4
 solving_systems_y1 = 0.8
 solving_systems_y2 = -0.6
 solving_systems_m = Mat(({0, 1}, {0, 1}), {(0,0):-0.2, (0,1):0.8, (1,0):0.4, (1,1):-0.6})
-solving_systems_a = Mat(({0, 1}, {0, 1}), {...})
-solving_systems_a_times_m = Mat(({0, 1}, {0, 1}), {...})
-solving_systems_m_times_a = Mat(({0, 1}, {0, 1}), {...})
+solving_systems_a = Mat(({0, 1}, {0, 1}), {(0,0):3, (0,1):4, (1,0):2, (1,1):1})
+solving_systems_a_times_m = Mat(({0, 1}, {0, 1}), {(0,0):1, (0,1):0, (1,0):0, (1,1):1})
+solving_systems_m_times_a = Mat(({0, 1}, {0, 1}), {(0,0):1, (0,1):0, (1,0):0, (1,1):1})
 
 
 
