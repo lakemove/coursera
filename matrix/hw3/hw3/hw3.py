@@ -166,7 +166,7 @@ def lin_comb_vec_mat_mult(v, M):
 def dot_product_mat_vec_mult(M, v):
     assert(M.D[1] == v.D)
     m=mat2rowdict(M)
-    return Vec(M.D[0], {x: m[x] * v for x in m])
+    return Vec(M.D[0], {x: m[x] * v for x in m})
 
 
 
