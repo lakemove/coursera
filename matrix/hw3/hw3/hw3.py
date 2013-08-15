@@ -101,11 +101,11 @@ part_3_BA = [[3,4,0,-2],[1,-4,6,2],[2,0,1,5],[3,0,-4,2]]
 # For example, the sum of 'a' and 'b' would be 'a+b'.
 
 matrix_matrix_mult_1    = [[1,'a+b'],[0,1]]
-matrix_matrix_mult_2_A2 = [[1,2*'a'],[0,1]]
-matrix_matrix_mult_2_A3 = [[1,3*'a'],[0,1]]
+matrix_matrix_mult_2_A2 = [[1,'a^2'],[0,1]]
+matrix_matrix_mult_2_A3 = [[1,'a^3'],[0,1]]
 
 # Use the string 'n' to represent variable the n in A^n.
-matrix_matrix_mult_2_An = [[1,'na'],[0,1]]
+matrix_matrix_mult_2_An = [[1,'a^n'],[0,1]]
 
 
 
@@ -148,8 +148,8 @@ column_row_vector_multiplication5 = Vec({0, 1, 2}, {0:-3, 1:1, 2:9})
 ## Problem 11
 def lin_comb_mat_vec_mult(M, v):
     assert(M.D[1] == v.D)
-    m=mat2rowdict(M)
-    return Vec(M.D[0], {x:sum([m[x][i] * v[i] for i in v.D]) for x in m})
+    m=mat2coldict(M)
+    return Vec(M.D[0], {x:sum([i[x] * v[i] for i in m]) for x in M.D[0]})
     # return M * v
 
 
@@ -157,42 +157,49 @@ def lin_comb_mat_vec_mult(M, v):
 ## Problem 12
 def lin_comb_vec_mat_mult(v, M):
     assert(v.D == M.D[0])
-    return Vec(M.D[1], {x:sum([M[x,i] * v[i] for i in v.D]) for x in M.D[1]})
+    m=mat2rowdict(M)
+    return Vec(M.D[1], {x:sum([i[x] * v[i] for i in m]) for x in M.D[1]})
 
 
 
 ## Problem 13
 def dot_product_mat_vec_mult(M, v):
     assert(M.D[1] == v.D)
-    pass
+    m=mat2rowdict(M)
+    return Vec(M.D[0], {x: m[x] * v for x in m])
 
 
 
 ## Problem 14
 def dot_product_vec_mat_mult(v, M):
     assert(v.D == M.D[0])
-    pass
+    m=mat2coldict(M)
+    return Vec(M.D[1], {x: m[x] * v for x in m})
 
 
 
 ## Problem 15
 def Mv_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
-    pass
+    bm=mat2coldict(B)
+    return Mat((A.D[0],B.D[1]), {b: A*bm[b] for b in bm})
 
 
 
 ## Problem 16
 def vM_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
-    pass
+    am=mat2rowdict(A)
+    return Mat((A.D[0], B.D[1]), {i: am[i] * B for i in am})
 
 
 
 ## Problem 17
 def dot_prod_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
-    pass
+    a=mat2rowdict(A)
+    b=mat2coldict(B)
+    return Mat((A.D[0], B.D[1]), {(x,y):a[x]*b[y] for x in a for y in b})
 
 
 
