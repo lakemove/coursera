@@ -39,21 +39,23 @@ def find_error(e):
         >>> find_error(Vec({0,1,2}, {1:one, 2:one}))
         Vec({0, 1, 2, 3, 4, 5, 6},{2: one})    
     """
-    pos=0
+    pos=-1
     if e[0] == one :
         pos += 4
     if e[1] == one :
         pos += 2
     if e[2] == one :
         pos += 1
+    if pos < 0 :
+        return Vec({0,1,2,3,4,5,6}, {})
     return Vec({0,1,2,3,4,5,6}, {pos:one})
 
 ## Task 4 part 2
 # Use the Vec class for your answers.
 non_codeword = Vec({0,1,2,3,4,5,6}, {0: one, 1:0, 2:one, 3:one, 4:0, 5:one, 6:one})
-error_vector = Vec({0, 1, 2, 3, 4, 5, 6},{0: one})
-code_word = Vec({0,1,2,3,4,5,6}, {1:0, 2:one, 3:one, 4:0, 5:one, 6:one})
-original = [1,0,0] # R * code_word
+error_vector = Vec({0, 1, 2, 3, 4, 5, 6},{6: one})
+code_word = Vec({0,1,2,3,4,5,6}, {0: one, 1:0, 2:one, 3:one, 4:0, 5:one})
+original = [0,1,0,1] # R * code_word
 
 
 ## Task 5

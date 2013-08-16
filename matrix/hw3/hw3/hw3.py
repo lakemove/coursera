@@ -4,6 +4,9 @@
 from mat import Mat
 from vec import Vec
 from matutil import mat2rowdict
+from matutil import mat2coldict
+from matutil import rowdict2mat
+from matutil import coldict2mat
 
 
 
@@ -101,11 +104,11 @@ part_3_BA = [[3,4,0,-2],[1,-4,6,2],[2,0,1,5],[3,0,-4,2]]
 # For example, the sum of 'a' and 'b' would be 'a+b'.
 
 matrix_matrix_mult_1    = [[1,'a+b'],[0,1]]
-matrix_matrix_mult_2_A2 = [[1,'a^2'],[0,1]]
-matrix_matrix_mult_2_A3 = [[1,'a^3'],[0,1]]
+matrix_matrix_mult_2_A2 = [[1,2],[0,1]]
+matrix_matrix_mult_2_A3 = [[1,3],[0,1]]
 
 # Use the string 'n' to represent variable the n in A^n.
-matrix_matrix_mult_2_An = [[1,'a^n'],[0,1]]
+matrix_matrix_mult_2_An = [[1,'n'],[0,1]]
 
 
 
@@ -149,7 +152,7 @@ column_row_vector_multiplication5 = Vec({0, 1, 2}, {0:-3, 1:1, 2:9})
 def lin_comb_mat_vec_mult(M, v):
     assert(M.D[1] == v.D)
     m=mat2coldict(M)
-    return Vec(M.D[0], {x:sum([i[x] * v[i] for i in m]) for x in M.D[0]})
+    return sum([v[i] * m[i] for i in m])
     # return M * v
 
 
@@ -158,7 +161,7 @@ def lin_comb_mat_vec_mult(M, v):
 def lin_comb_vec_mat_mult(v, M):
     assert(v.D == M.D[0])
     m=mat2rowdict(M)
-    return Vec(M.D[1], {x:sum([i[x] * v[i] for i in m]) for x in M.D[1]})
+    return sum([v[i]*m[i] for i in m])
 
 
 
@@ -182,7 +185,7 @@ def dot_product_vec_mat_mult(v, M):
 def Mv_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
     bm=mat2coldict(B)
-    return Mat((A.D[0],B.D[1]), {b: A*bm[b] for b in bm})
+    return coldict2mat({b: A*bm[b] for b in bm})
 
 
 
@@ -190,7 +193,7 @@ def Mv_mat_mat_mult(A, B):
 def vM_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
     am=mat2rowdict(A)
-    return Mat((A.D[0], B.D[1]), {i: am[i] * B for i in am})
+    return rowdict2mat({i: am[i] * B for i in am})
 
 
 
@@ -220,6 +223,6 @@ solving_systems_m_times_a = Mat(({0, 1}, {0, 1}), {(0,0):1, (0,1):0, (1,0):0, (1
 
 are_inverses1 = True
 are_inverses2 = True
-are_inverses3 = True
-are_inverses4 = True
+are_inverses3 = False
+are_inverses4 = False
 
