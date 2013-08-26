@@ -3,15 +3,13 @@
 
 from vecutil import list2vec
 from solver import solve
-from matutil import listlist2mat, coldict2mat, identity,mat2coldict
+from matutil import listlist2mat, coldict2mat, identity,mat2coldict, mat2rowdict, rowdict2mat
 from mat import Mat
 from GF2 import one
 from vec import Vec
-from hw4 import exchange
-from independence import rank
-from independence import is_independent
-from hw4 import is_superfluous
-
+from hw4 import exchange, is_superfluous
+from independence import rank, is_independent
+from triangular import triangular_solve_n
 
 
 ## Problem 1
@@ -181,7 +179,7 @@ def direct_sum_decompose(U_basis, V_basis, w):
     U=coldict2mat(U_basis)
     V=coldict2mat(V_basis)
     ux=Vec(U.D[1], {x:m[x] for x in U.D[1]})
-    vx=Vec(V.D[1], {x:m[x] for x in V.D[1]})
+    vx=Vec(V.D[1], {x:m[x+len(U_basis)] for x in V.D[1]})
     return (U*ux, V*vx)
 
 
@@ -195,8 +193,10 @@ def is_invertible(M):
     >>> is_invertible(M)
     True
     '''
+    # 1. cardinality of row = cardinality of column
+    # 2. column vectors are linearly independent
     c=mat2coldict(M)
-    return rank([c[x] for x in c]) == len(M.D[1]) and len(M.D[1]) == len(M.D[1])
+    return rank([c[x] for x in c]) == len(M.D[1]) and len(M.D[0]) == len(M.D[1])
 
 
 ## Problem 11
@@ -224,4 +224,11 @@ def find_triangular_matrix_inverse(A):
     >>> find_triangular_matrix_inverse(A) == Mat(({0, 1, 2, 3}, {0, 1, 2, 3}), {(0, 1): -0.5, (1, 2): -0.3, (3, 2): 0.0, (0, 0): 1.0, (3, 3): 1.0, (3, 0): 0.0, (3, 1): 0.0, (2, 1): 0.0, (0, 2): -0.05000000000000002, (2, 0): 0.0, (1, 3): -0.87, (2, 3): -0.1, (2, 2): 1.0, (1, 0): 0.0, (0, 3): -3.545, (1, 1): 1.0})
     True
     '''
-    pass
+    rl=mat2rowdict(A)
+    l=len(A.D[0])
+    m={}
+    for i in range(l) :
+        b = l * [0]
+        b[i] = 1
+        m[i] = triangular_solve_n(rl, b)
+    return coldict2mat(m)
