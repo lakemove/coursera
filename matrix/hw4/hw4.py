@@ -201,8 +201,9 @@ def is_superfluous(L, i):
         False
     '''
     b=L[i]
-    L.pop(i)
-    A=coldict2mat(L)
+    LL=[l for l in L if l != b]
+    # L.pop(i)
+    A=coldict2mat(LL)
     u=solve(A,b)
     r=b - A * u
     return r * r < 1.0e-14
