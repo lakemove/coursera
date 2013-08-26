@@ -4,8 +4,11 @@
 from GF2 import one
 from math import sqrt, pi
 from matutil import coldict2mat
+from matutil import rowdict2mat
+from matutil import listlist2mat
 from solver import solve
 from vec import Vec
+from vecutil import list2vec
 
 
 
@@ -280,13 +283,12 @@ def exchange(S, A, z):
         >>> exchange(S, A, z) == Vec({0, 1, 2, 3},{0: 0, 1: 0, 2: 1, 3: 0})
         True
     '''
-    B=A+[z]
-    M = coldict2mat(B)
     for w in S :
         if w not in A :
+            ss = [s for s in S if s != w]
+            ss += [z]
+            M = coldict2mat({i:ss[i] for i in range(len(ss))})
             u = solve(M, w)
             r = w - M * u
-            if r * r > 1.0e-14 :
+            if r * r < 1.0e-14 :
                 return w
-    return Vec(S[0].D, {})
-
