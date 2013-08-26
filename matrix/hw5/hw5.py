@@ -3,10 +3,14 @@
 
 from vecutil import list2vec
 from solver import solve
-from matutil import listlist2mat, coldict2mat
+from matutil import listlist2mat, coldict2mat, identity,mat2coldict
 from mat import Mat
 from GF2 import one
 from vec import Vec
+from hw4 import exchange
+from independence import rank
+from independence import is_independent
+from hw4 import is_superfluous
 
 
 
@@ -61,24 +65,31 @@ def morph(S, B):
         [(Vec({0, 1, 2},{0: 1, 1: 1, 2: 0}), Vec({0, 1, 2},{0: 1, 1: 0, 2: 0})), (Vec({0, 1, 2},{0: 0, 1: 1, 2: 1}), Vec({0, 1, 2},{0: 0, 1: 1, 2: 0})), (Vec({0, 1, 2},{0: 1, 1: 0, 2: 1}), Vec({0, 1, 2},{0: 0, 1: 0, 2: 1}))]
 
     '''
-    pass
+    T=[x for x in S]
+    result = []
+    for z in B :
+        w=exchange(T, [i for i in B if i != z], z)
+        T.remove(w)
+        T += [z]
+        result.append((z,w))
+    return result
 
 
 
 ## Problem 4
 # Please express each solution as a list of vectors (Vec instances)
 
-row_space_1 = [...]
-col_space_1 = [...]
+row_space_1 = [ list2vec(v) for v in [[1,2,0], [0,2,1]] ]
+col_space_1 = [ list2vec(v) for v in [[1,0], [0,1]] ]
 
-row_space_2 = [...]
-col_space_2 = [...]
+row_space_2 = [ list2vec(v) for v in [[1,4,0,0], [0,2,2,0], [0,0,1,1]] ] 
+col_space_2 = [list2vec([1,0,0]), list2vec([0,2,1]), list2vec([0,0,1])]
 
-row_space_3 = [...]
-col_space_3 = [...]
+row_space_3 = [list2vec([1])]
+col_space_3 = [list2vec([1,2,3])]
 
-row_space_4 = [...]
-col_space_4 = [...]
+row_space_4 = [list2vec([1,0]), list2vec([2,1])]
+col_space_4 = [list2vec([1,2,3]), list2vec([0,1,4])]
 
 
 
@@ -104,7 +115,7 @@ def my_is_independent(L):
     >>> my_is_independent(L[2:5])
     False
     '''
-    pass
+    return rank(L) == len(L)
 
 
 ## Problem 6
@@ -121,7 +132,11 @@ def subset_basis(T):
     >>> subset_basis([a0,a1,a2,a3]) == [Vec({'c', 'b', 'a', 'd'},{'a': 1}), Vec({'c', 'b', 'a', 'd'},{'b': 1}), Vec({'c', 'b', 'a', 'd'},{'c': 1})]
     True
     '''
-    pass
+    S=[]
+    for v in T :
+        if is_independent(S + [v]) :
+            S.append(v)
+    return S
 
 
 
@@ -134,15 +149,15 @@ def my_rank(L):
     >>> my_rank([list2vec(v) for v in [[1,2,3],[4,5,6],[1.1,1.1,1.1]]])
     2
     '''
-    pass
+    return len(subset_basis(L))
 
 
 ## Problem 8
 # Please give each answer as a boolean
 
-only_share_the_zero_vector_1 = ...
-only_share_the_zero_vector_2 = ...
-only_share_the_zero_vector_3 = ...
+only_share_the_zero_vector_1 = True
+only_share_the_zero_vector_2 = True
+only_share_the_zero_vector_3 = True
 
 
 
@@ -161,8 +176,13 @@ def direct_sum_decompose(U_basis, V_basis, w):
     >>> direct_sum_decompose(U_basis, V_basis, w) == (Vec({0, 1, 2, 3, 4, 5},{0: 2.0, 1: 4.999999999999972, 2: 0.0, 3: 0.0, 4: 1.0, 5: 0.0}), Vec({0, 1, 2, 3, 4, 5},{0: 0.0, 1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0}))
     True
     '''
-    pass
-
+    M=coldict2mat(U_basis + V_basis)
+    m=solve(M, w)
+    U=coldict2mat(U_basis)
+    V=coldict2mat(V_basis)
+    ux=Vec(U.D[1], {x:m[x] for x in U.D[1]})
+    vx=Vec(V.D[1], {x:m[x] for x in V.D[1]})
+    return (U*ux, V*vx)
 
 
 ## Problem 10
@@ -175,7 +195,8 @@ def is_invertible(M):
     >>> is_invertible(M)
     True
     '''
-    pass
+    c=mat2coldict(M)
+    return rank([c[x] for x in c]) == len(M.D[1]) and len(M.D[1]) == len(M.D[1])
 
 
 ## Problem 11
@@ -188,7 +209,9 @@ def find_matrix_inverse(A):
     >>> find_matrix_inverse(M) == Mat(({0, 1, 2}, {0, 1, 2}), {(0, 1): one, (2, 0): 0, (0, 0): 0, (2, 2): one, (1, 0): one, (1, 2): 0, (1, 1): 0, (2, 1): 0, (0, 2): 0})
     True
     '''
-    pass
+    D=A.D[0]
+    id=mat2coldict(Mat((D,D), {(d,d):one for d in D}))
+    return coldict2mat({i: solve(A, id[i]) for i in id})
 
 
 
