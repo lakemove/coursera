@@ -15,7 +15,7 @@ def move2board(v):
           in whiteboard coordinates of the point p such that the line through the 
           origin and q intersects the whiteboard plane at p.
     '''
-    return Vec({'y1','y2','y3'}, ...)
+    return Vec({'y1','y2','y3'}, {x:v[x]/v['y3'] for x in v.D})
 
 ## Task 2
 def make_equations(x1, x2, w1, w2): 
