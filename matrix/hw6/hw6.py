@@ -9,25 +9,25 @@ from GF2 import one
 ## Problem 1
 # Write each matrix as a list of row lists
 
-echelon_form_1 = [[   ...   ],
-                  [   ...   ],
-                  [   ...   ],
-                  [   ...   ],
-                  [   ...   ]]
+echelon_form_1 = [[   1,2,0,2,0   ],
+                  [   0,1,0,3,4   ],
+                  [   0,0,2,3,4   ],
+                  [   0,0,0,2,0   ],
+                  [   0,0,0,0,4   ]]
 
-echelon_form_2 = [[   ...   ],
-                  [   ...   ],
-                  [   ...   ],
-                  [   ...   ]]
+echelon_form_2 = [[   0,4,3,4,4   ],
+                  [   0,0,4,2,0   ],
+                  [   0,0,0,0,1   ],
+                  [   0,0,0,0,0   ]]
 
-echelon_form_3 = [[   ...   ],
-                  [   ...   ],
-                  [   ...   ]]
+echelon_form_3 = [[   1,0,0,1   ],
+                  [   0,0,0,1   ],
+                  [   0,0,0,0   ]]
 
-echelon_form_4 = [[   ...   ],
-                  [   ...   ],
-                  [   ...   ],
-                  [   ...   ]]
+echelon_form_4 = [[   1,0,0,0   ],
+                  [   0,1,0,0   ],
+                  [   0,0,0,0   ],
+                  [   0,0,0,0   ]]
 
 
 
@@ -45,16 +45,27 @@ def is_echelon(A):
         >>> is_echelon([[0,1,1],[0,1,0],[0,0,1]])
         False
     '''
-    pass
+    c=-1
+    for row in A :
+      for i in range(len(row)) :
+        if i == (len(row) - 1) and row[i] == 0 and c < 0 :
+          c = 0
+        if row[i] != 0 :
+          if i <= c : 
+            return False
+          else :
+            c = i
+            break
+    return True
 
 
 
 ## Problem 3
 # Give each answer as a list
 
-echelon_form_vec_a = ...
-echelon_form_vec_b = ...
-echelon_form_vec_c = ...
+echelon_form_vec_a = [1,0,3,0]
+echelon_form_vec_b = [-3,0,-2,3]
+echelon_form_vec_c = [-5,0,2,0,2]
 
 
 
@@ -62,8 +73,8 @@ echelon_form_vec_c = ...
 # If a solution exists, give it as a list vector.
 # If no solution exists, provide "None".
 
-solving_with_echelon_form_a = ...
-solving_with_echelon_form_b = ...
+solving_with_echelon_form_a = None
+solving_with_echelon_form_b = [21,0,2,0,0]
 
 
 
