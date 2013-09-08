@@ -5,6 +5,7 @@ from orthogonalization import orthogonalize
 import orthonormalization
 from mat import Mat
 from vec import Vec
+from math import sqrt
 from vecutil import list2vec
 from matutil import listlist2mat
 
@@ -87,12 +88,16 @@ def orthonormal_projection_orthogonal(W, b):
         >>> orthonormal_projection_orthogonal(W, b) == Vec({0, 1, 2},{0: 0, 1: 0, 2: 4})
         True
     '''
-    pass
+    return b -  W * b * W
 
 
 
 ## Problem 6
 # Write your solution for this problem in orthonormalization.py.
+def orthonormalize(L) :
+    o=orthogonalize(L)
+    # norms=[1 /(v*v) for v in o]
+    return [v * 1 /sqrt(v*v) for v in o]
 
 
 
