@@ -1,6 +1,6 @@
-from mat import *
-from vec import *
-from cancer_data import *
+from vec import Vec
+from mat import Mat
+from cancer_data import read_training_data
 
 ## Task 1 ##
 def signum(u):
@@ -15,7 +15,13 @@ def signum(u):
         >>> signum(Vec({1,2,3},{1:2, 2:-1})) == Vec({1,2,3},{1:1,2:-1,3:1})
         True
     '''
-    pass
+    v = Vec(u.D, {})
+    for d in u.D :
+        if u[d] >= 0 :
+            v[d] = 1
+        else :
+            v[d] = -1
+    return v
 
 ## Task 2 ##
 def fraction_wrong(A, b, w):
@@ -28,7 +34,8 @@ def fraction_wrong(A, b, w):
         - Fraction (as a decimal in [0,1]) of vectors incorrectly
           classified by w 
     '''
-    pass
+    v=signum(A*w) + b
+    return sum([1 for x in v.D if v[x] == 0])/len(v.D)
 
 ## Task 3 ##
 def loss(A, b, w):
@@ -40,7 +47,8 @@ def loss(A, b, w):
     Output:
         - Value of loss function at w for training data
     '''
-    pass
+    v = A * w - b
+    return v * v
 
 ## Task 4 ##
 def find_grad(A, b, w):
