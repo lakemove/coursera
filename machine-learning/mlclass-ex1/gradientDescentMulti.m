@@ -20,7 +20,14 @@ for iter = 1:num_iters
 
 
 
+tmp = zeros(size(theta),1);
+for i2 = 1:size(theta)
+    tmp(i2) = theta(i2)  -  X(:,i2)' * (X * theta - y) * alpha / m;
+end
 
+theta = tmp;
+
+% theta = alpha * ones(2,1) + theta
 
 
 

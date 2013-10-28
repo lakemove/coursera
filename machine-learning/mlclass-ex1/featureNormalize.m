@@ -27,11 +27,16 @@ sigma = zeros(1, size(X, 2));
 %       
 
 
+mu = mean(X);
+sigma = std(X);
 
-
-
-
-
+% X_norm = X - kron(mu, ones(size(X,1),1))
+% tmp = X - ones(size(X,1), 1) * mu 
+tmp = X - kron(mu, ones(size(X,1),1));
+for iter = 1:size(X,2)
+	tmp(:,iter) = tmp(:,iter) * (1/sigma(iter));
+end
+X_norm = tmp;
 
 
 % ============================================================
