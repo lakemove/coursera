@@ -18,7 +18,11 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+% theta(1) should not be regularized
+J = sum(-y .* log(sigmoid(X * theta)) - (1 - y) .* log(1 - sigmoid(X * theta))) / m + theta' * theta * lambda / (2 * m) - (lambda / (2 * m)) * theta(1)^2
 
+grad = X' * (sigmoid(X * theta) - y) / m + theta * lambda / m 
+grad(1) = grad(1) - theta(1) * lambda / m
 
 
 
