@@ -32,6 +32,9 @@ X = [ones(m, 1) X];
 
 
 
+%this will cause overflow, should be a bug of octave, test : [w,iw] = max(ones(50000,10), [], 2)
+[w, iw] = max(X * all_theta', [], 2)
+p = iw
 
 
 
