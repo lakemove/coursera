@@ -62,13 +62,38 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% yy is m x num_labels , labels as row vector
+yy = zeros(m, num_labels)
+for i = 1:m 
+	yy(i, y(i)) = 1 ;
+end
+
+hx = sigmoid([ones(m, 1) sigmoid([ones(m, 1) X] * Theta1')] * Theta2')  % one liner
+
+% XX  = [ones(m,1) X]
+% a2 = sigmoid(XX * Theta1')
+% a3 = sigmoid([ones(m, 1) a2] * Theta2')
+% hx = a3
+
+J = sum(sum( -yy .* log(hx) - (1-yy) .* log(1 - hx) ) ) / m + (sum(sum(Theta1(:, 2:end) .^ 2)) + sum(sum( Theta2(:, 2:end) .^ 2 ))) * lambda /(2*m)
 
 
+for i = 1:m
+	a1 = [1 X(i,:)] ;        % 1x401
+	z2 = a1 * Theta1' ;      % 1x25
+	a2 = [1 sigmoid(z2)] ;   % 1x26
+	z3 = a2 * Theta2' ;      % 1x10
+	a3 = sigmoid(z3) ;
 
+	e3 = a3' - yy(i,:)' ;    % 10x1
+	e2 = (Theta2' * e3)(2:end, :) .* sigmoidGradient(z2') ; % 25x1 
 
+	Theta2_grad = Theta2_grad + e3 * a2 ;
+	Theta1_grad = Theta1_grad + e2 * a1 ;
+end
 
-
-
+Theta2_grad = Theta2_grad ./ m + [zeros(size(Theta2,1),1) Theta2(:, 2:end) * lambda / m]
+Theta1_grad = Theta1_grad ./ m + [zeros(size(Theta1,1),1) Theta1(:, 2:end) * lambda / m]
 
 
 
