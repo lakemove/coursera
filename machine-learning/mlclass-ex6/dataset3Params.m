@@ -23,7 +23,22 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+x1 = [1 2 1]; x2 = [0 4 -1];
+posvals = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+m=size(posvals,2);
 
+meanval=10000;
+for i = 1:m
+	for j = 1:m 
+		Cc = posvals(i); sigmaa = posvals(j);
+		val = mean(double(svmPredict(svmTrain(X, y, Cc, @(x1, x2) gaussianKernel(x1, x2, sigmaa)), Xval) ~= yval));
+		if val <meanval 
+			meanval = val;
+			C = Cc;
+			sigma = sigmaa;
+		end
+	end
+end
 
 
 
